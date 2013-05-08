@@ -1,0 +1,14 @@
+com.cambiumnetworks.wa.common
+com.cambiumnetworks.wa.dao
+com.cambiumnetworks.wa.protocol.snmp
+com.cambiumnetworks.wa.protocol.snmp.model
+com.cambiumnetworks.wa.services
+com.cambiumnetworks.wa.services.database
+com.cambiumnetworks.wa.services.datapollingservice
+com.cambiumnetworks.wa.services.devicecompiler
+com.cambiumnetworks.wa.services.fault
+com.cambiumnetworks.wa.services.policies
+com.cambiumnetworks.wa.services.serversettings
+com.cambiumnetworks.wa.services.statuspolling
+com.cambiumnetworks.wa.util
+com.cambiumnetworks.wa.util.logging
