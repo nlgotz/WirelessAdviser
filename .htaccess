@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# Don't match real existing files so CSS, scripts, images aren't rewritten
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^([a-zA-Z0-9_]+)$ index.php?name=$1 [NC,L]
+RewriteRule ^([a-zA-Z0-9_-]+)/([0-9]+)$ index.php?name=$1&page=$2
