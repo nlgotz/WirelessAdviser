@@ -1,0 +1,110 @@
+  html,
+  body {
+    height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
+  }
+
+  /* Wrapper for page content to push down footer */
+  #wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -20px;
+  }
+
+  /* Set the fixed height of the footer here */
+  #push,
+  #footer {
+    height: 20px;
+  }
+  #footer {
+    background-color: #000;
+  }
+
+  /* Lastly, apply responsive CSS fixes as necessary */
+  @media (max-width: 767px) {
+    #footer {
+      margin-left: -20px;
+      margin-right: -20px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+  #wrap > .container {
+    padding-top: 40px;
+    height: 100%;
+  }
+  #wrap > .container-fluid {
+    padding-top: 50px;
+    height: 100%;
+  }
+
+/* Start:jQuery DataTables */
+.dataTables_info {
+	float:left;
+}
+
+.dataTables_filter {
+  float:left;
+}
+
+.dataTables_length {
+	float:left;
+	width:40%;
+}
+
+.dataTables_paginate {
+	float:right;
+	margin:0;
+}
+
+table.table thead .sorting,
+table.table thead .sorting_asc,
+table.table thead .sorting_desc,
+table.table thead .sorting_asc_disabled,
+table.table thead .sorting_desc_disabled {
+    cursor: pointer;
+    *cursor: hand;
+}
+ 
+table.table thead .sorting { background: url('../img/sort_both.png') no-repeat center right; }
+table.table thead .sorting_asc { background: url('../img/sort_asc.png') no-repeat center right; }
+table.table thead .sorting_desc { background: url('../img/sort_desc.png') no-repeat center right; }
+ 
+table.table thead .sorting_asc_disabled { background: url('../img/sort_asc_disabled.png') no-repeat center right; }
+table.table thead .sorting_desc_disabled { background: url('../img/sort_desc_disabled.png') no-repeat center right; }
+
+
+/* End:jQuery DataTables */
+
+#map-canvas, #map_canvas {
+   position: absolute;
+    top: 40px;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+}
+#container, #container-fluid, .container-fluid,.row-fluid, .span12 {
+  height: 100%;
+}
+
+
+#panel {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  margin-left: -180px;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+}
+
+#map-canvas label { width: auto; display:inline; }
+
+.table tbody tr.error > td { background-color: #ff8d95;}
+.table tbody tr.success > td { background-color: #99ff91;}
+.table tbody tr.warning > td { background-color: #fff68d;}
+
+12ff00
