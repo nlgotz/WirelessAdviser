@@ -84,11 +84,21 @@ table.table thead .sorting_desc_disabled { background: url('../img/sort_desc_dis
     bottom: 20px;
     left: 0;
     right: 0;
+    height: 100%;
 }
 #container, #container-fluid, .container-fluid,.row-fluid, .span12 {
   height: 100%;
 }
 
+@media print {
+  html, body {
+    height: auto;
+  }
+
+  #map_canvas {
+    height: 650px;
+  }
+}
 
 #panel {
   position: absolute;
@@ -101,10 +111,8 @@ table.table thead .sorting_desc_disabled { background: url('../img/sort_desc_dis
   border: 1px solid #999;
 }
 
-#map-canvas label { width: auto; display:inline; }
+#map-canvas img {max-width: none;}
 
 .table tbody tr.error > td { background-color: #ff8d95;}
 .table tbody tr.success > td { background-color: #99ff91;}
 .table tbody tr.warning > td { background-color: #fff68d;}
-
-12ff00

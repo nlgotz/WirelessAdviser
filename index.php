@@ -49,14 +49,6 @@ ORDER BY devices.device_id"
             't' => 'ev',
             );
         break;
-        case 'addons':
-        $h2o = new h2o('templates/addons.tpl');
-
-        $name = array(
-            'title' => 'Addons',
-            't' => 'ad',
-            );
-        break;
         case 'map':
         default:
         $h2o = new h2o('templates/map.tpl');

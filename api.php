@@ -165,7 +165,7 @@ class QueryJson
 
 	public function mapPointsQuery()
 	{
-		$query = "SELECT device_id,display_name,device_state,latitude::float,longitude::float FROM wirelessadviser.devices;";
+		$query = "SELECT device_id,display_name,device_state,latitude::float,longitude::float FROM wirelessadviser.devices ORDER BY device_id;";
 		$out = $this->db->run($query);
 		
 
@@ -174,7 +174,14 @@ class QueryJson
 
 	public function mapPathsQuery()
 	{
-		# code...
+		$query = "SELECT d1.latitude AS p_lat,d1.longitude AS p_long,d2.latitude AS c_lat,d2.longitude AS c_long,d2.device_state AS status FROM wirelessadviser.links l
+INNER JOIN wirelessadviser.devices AS d1
+	ON d1.device_id = l.parent_id
+INNER JOIN wirelessadviser.devices AS d2
+	ON d2.device_id = l.child_id;";
+		$out = $this->db->run($query);
+
+		echo json_encode($out);
 	}
 
 
