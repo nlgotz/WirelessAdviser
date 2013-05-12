@@ -1,94 +1,15 @@
 <?php
-
-$aColumns = array('device_id', 'display_name', 'ip_address', 'device_type', 'device_state', 'latitude', 'longitude', 'azimuth', 'height');
-$aTypes = array('integer', 'text', 'inet', 'text', 'text', 'double precision', 'double precision', 'double precision', 'double precision');
-
-include_once("db/class.db.php");
-
-$host = "localhost";
-$dbname = "wirelessadviser";
-$user = "postgres";
-$password = "postgres";
-
-    //create the db connection
-$db = new db("pgsql:host=$host;port=5432;dbname=$dbname;user=$user;password=$password",
-	$user,
-	$password);
-
-// $sLimit = "";
-// if ( isset( $_GET['iDisplayStart'] ) && $_GET['iDisplayLength'] != '-1' )
-// {
-// 	$sLimit = "LIMIT ".intval( $_GET['iDisplayLength'] )." OFFSET ".
-// 	intval( $_GET['iDisplayStart'] );
-// }
-
-// $sOrder = orderBy($aColumns, $_GET['iSortCol_0'], $_GET['sSortDir_0'], $aTypes);
+include_once("db.php");
 
 
-// $query = "SELECT COUNT(device_id) FROM wirelessadviser.devices";
-// $length = $db->run($query);
+ $qj = new QueryJson($_GET, $db);
+ $q = (isset($_GET['q'])) ? $_GET['q'] : null ;
 
-// $query =  "SELECT device_id, display_name, ip_address, device_type, device_state, latitude, longitude, azimuth, height FROM wirelessadviser.devices $sOrder $sLimit";
-// $out = $db->run($query);
-// /*
-//  * Output
-//  */
-// $output = array(
-// 	"sEcho" => intval($_GET['sEcho']),
-// 	"iTotalRecords" => $length[0]["count"],
-// 	"iTotalDisplayRecords" => $length[0]["count"],
-// 	"aaData" => array()
-// 	);
-
-
-// $row = array();
-// $line = array();
-// for ($i=0; $i < count($out); $i++) {
-// 	foreach ($out[$i] as $key => $value) {
-// 			//$row[]= $out[$i][$key];
-// 		$line[] = $out[$i][$key];
-// 	}
-// 	if($out[$i]["device_state"]=="up") {
-// 		$line["DT_RowClass"] = "success";
-// 	} else {
-// 		$line["DT_RowClass"] = "error";
-// 	}
-// 	$row[] = $line;
-// 	$line = null;
-// }
-
-// $output['aaData'] = $row;
-
-
-// echo json_encode( $output );
-
-// /**
-// * handles the ORDER BY in the SQL statement
-// */
-// function orderBy($aColumns, $sortCol, $sortDir, $aTypes)
-// {
-// 	$sOrder = "";
-// 	if (isset($sortCol)) {
-// 		$sOrder  = "ORDER BY ";
-// 		switch ($aTypes[$sortCol]) {
-// 			case 'integer':
-// 			$sOrder .= $aColumns[$sortCol]."::integer";
-// 			break;
-// 			case 'inet':
-// 			$sOrder .= "inet(".$aColumns[$sortCol].")";
-// 			break;
-// 			case 'double precision':
-// 			$sOrder .= "cast(".$aColumns[$sortCol]." as double precision)";
-// 			break;
-// 			default:
-// 			case 'text':
-// 			$sOrder .= $aColumns[$sortCol];
-// 			break;
-// 		}
-// 		$sOrder .= ($sortDir=='asc') ? ' asc' : ' desc' ;
-// 	}
-// 	return $sOrder;
-// }
+//$q = ''; //$q should be a $_GET param
+ $allowedQueries = array('in','ev', 'mapPaths','mapPoints');
+ if(in_array($q, $allowedQueries)) {
+ 	$qj->query($q);
+ }
 
 /**
 * 
@@ -128,7 +49,9 @@ class QueryJson
 		$aColumns = array('device_id', 'display_name', 'ip_address', 'device_type', 'device_state', 'latitude', 'longitude', 'azimuth', 'height');
 		$aTypes = array('integer', 'text', 'inet', 'text', 'text', 'double precision', 'double precision', 'double precision', 'double precision');
 
-		$query = "SELECT COUNT(device_id) FROM wirelessadviser.devices";
+		$sFilter = $this->Filter($aColumns, $aTypes);
+
+		$query = "SELECT COUNT(device_id) FROM wirelessadviser.devices $sFilter";
 		$length = $this->db->run($query);
 
 		$sOrder = $this->orderBy($aColumns, $this->self['iSortCol_0'], $this->self['sSortDir_0'], $aTypes);
@@ -136,7 +59,9 @@ class QueryJson
 		$sLimit = $this->Limit();
 
 
-		$query =  "SELECT device_id, display_name, ip_address, device_type, device_state, latitude, longitude, azimuth, height FROM wirelessadviser.devices $sOrder $sLimit";
+
+
+		$query =  "SELECT device_id, display_name, ip_address, device_type, device_state, latitude, longitude, azimuth, height FROM wirelessadviser.devices $sFilter $sOrder $sLimit";
 		$out = $this->db->run($query);
 
 		echo $this->output($out, $length, "in");
@@ -149,14 +74,16 @@ class QueryJson
 		$aColumns = array('event_time', 'events.device_id', 'display_name', 'device_type', 'severity_id','description');
 		$aTypes = array('text', 'integer', 'text', 'text', 'integer', 'text');
 
-		$query = "SELECT COUNT(event_time) FROM wirelessadviser.events;";
+		$sFilter = $this->Filter($aColumns, $aTypes);
+
+		$query = "SELECT count(events.event_time) FROM wirelessadviser.events LEFT OUTER JOIN wirelessadviser.devices ON events.device_id = devices.device_id $sFilter";
 		$length = $this->db->run($query);
 
 		$sOrder = $this->orderBy($aColumns, $this->self['iSortCol_0'], $this->self['sSortDir_0'], $aTypes);
 		//$sOrder = "";
 		$sLimit = $this->Limit();
 
-		$query = "SELECT events.event_time, events.device_id, devices.display_name, devices.device_type, events.severity_id, events.description FROM wirelessadviser.events LEFT OUTER JOIN wirelessadviser.devices ON events.device_id = devices.device_id $sOrder $sLimit;";
+		$query = "SELECT events.event_time, events.device_id, devices.display_name, devices.device_type, events.severity_id, events.description FROM wirelessadviser.events LEFT OUTER JOIN wirelessadviser.devices ON events.device_id = devices.device_id $sFilter $sOrder $sLimit;";
 		$out = $this->db->run($query);
 
 		echo $this->output($out, $length, "ev");
@@ -221,8 +148,32 @@ class QueryJson
 		return $sLimit;
 	}
 
-	private function output($out, $length, $type)
+
+	/**
+	 * Allows dataTables to filter data
+	 */
+	private function Filter($aColumns, $aTypes)
 	{
+		$sWhere = "";
+		if ( isset($this->self['sSearch']) && $this->self['sSearch'] != "" ) {
+			$sWhere = "WHERE (";
+				for ( $i=0 ; $i<count($aColumns) ; $i++ ) {
+					if($aColumns[$i] != "event_time" ) {
+						if($aTypes[$i]==="text") {
+							$sWhere .= $aColumns[$i]." LIKE '%".pg_escape_string( $this->self['sSearch'] )."%' OR ";
+						}
+					}
+				}
+				$sWhere = substr_replace( $sWhere, "", -3 );
+				$sWhere .= ")";
+}
+
+return $sWhere;
+}
+
+
+private function output($out, $length, $type)
+{
  				/*
  		* Output
  		*/
@@ -240,7 +191,7 @@ class QueryJson
  			foreach ($out[$i] as $key => $value) {
 			//$row[]= $out[$i][$key];
  				if($key==="device_id") {
- 					$line[] = '<a href="device/'.$out[$i][$key].'">'.$out[$i][$key]."</a>";
+ 					$line[] = '<a href="device/'.$out[$i][$key].'" onclick="window.open(this.href, \'\', \'width=500,height=550\');return false;">'.$out[$i][$key].'</a>';
  				} elseif ($key==="ip_address") {
  					$line[] = '<a href="https://'.$out[$i][$key].'">'.$out[$i][$key]."</a>";
  				} else {
@@ -283,14 +234,4 @@ class QueryJson
 
 
  }
-
- $qj = new QueryJson($_GET, $db);
- $q = (isset($_GET['q'])) ? $_GET['q'] : null ;
-
-//$q = ''; //$q should be a $_GET param
- $allowedQueries = array('in','ev', 'mapPaths','mapPoints');
- if(in_array($q, $allowedQueries)) {
- 	$qj->query($q);
- }
-
  ?>

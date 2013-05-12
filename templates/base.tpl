@@ -60,7 +60,7 @@
             <a class="brand" href="{{name.site}}">Wireless Adviser</a>
             <div class="nav-collapse collapse">
               <p class="navbar-text pull-right">
-                <a href="#" class="navbar-link">Logout</a>
+                <a href="{{name.site}}user/logout" class="navbar-link">Logout</a>
               </p>
               <ul class="nav">
                 <li {% if name.t == "ma"%} class="active"{% endif %}>

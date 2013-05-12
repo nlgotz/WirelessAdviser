@@ -115,3 +115,9 @@ table.table thead .sorting_desc_disabled { background: url('../img/sort_desc_dis
 .table tbody tr.error > td { background-color: #ff8d95;}
 .table tbody tr.success > td { background-color: #99ff91;}
 .table tbody tr.warning > td { background-color: #fff68d;}
+
+.error { background-color: #ff8d95; }
+.success { background-color: #99ff91; }
+.warning { background-color: #fff68d;}
+
+.masthead h3 {margin:0;}
