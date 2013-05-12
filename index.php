@@ -49,6 +49,14 @@ ORDER BY devices.device_id"
             't' => 'ev',
             );
         break;
+        case 'device':
+            $h2o = new h2o('templates/device.tpl');
+
+            $name = array(
+                'title' => 'Device',
+                't' => 'de',
+                );
+            break;
         case 'map':
         default:
         $h2o = new h2o('templates/map.tpl');

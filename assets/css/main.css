@@ -84,7 +84,6 @@ table.table thead .sorting_desc_disabled { background: url('../img/sort_desc_dis
     bottom: 20px;
     left: 0;
     right: 0;
-    height: 100%;
 }
 #container, #container-fluid, .container-fluid,.row-fluid, .span12 {
   height: 100%;

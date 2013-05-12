@@ -175,10 +175,10 @@ class QueryJson
 	public function mapPathsQuery()
 	{
 		$query = "SELECT d1.latitude AS p_lat,d1.longitude AS p_long,d2.latitude AS c_lat,d2.longitude AS c_long,d2.device_state AS status FROM wirelessadviser.links l
-INNER JOIN wirelessadviser.devices AS d1
-	ON d1.device_id = l.parent_id
-INNER JOIN wirelessadviser.devices AS d2
-	ON d2.device_id = l.child_id;";
+		INNER JOIN wirelessadviser.devices AS d1
+		ON d1.device_id = l.parent_id
+		INNER JOIN wirelessadviser.devices AS d2
+		ON d2.device_id = l.child_id;";
 		$out = $this->db->run($query);
 
 		echo json_encode($out);
@@ -239,7 +239,14 @@ INNER JOIN wirelessadviser.devices AS d2
  		for ($i=0; $i < count($out); $i++) {
  			foreach ($out[$i] as $key => $value) {
 			//$row[]= $out[$i][$key];
- 				$line[] = $out[$i][$key];
+ 				if($key==="device_id") {
+ 					$line[] = '<a href="device/'.$out[$i][$key].'">'.$out[$i][$key]."</a>";
+ 				} elseif ($key==="ip_address") {
+ 					$line[] = '<a href="https://'.$out[$i][$key].'">'.$out[$i][$key]."</a>";
+ 				} else {
+ 					$line[] = $out[$i][$key];
+ 				}
+
  			}
  			if($type==="in") {
  				if($out[$i]["device_state"]=="up") {
@@ -247,6 +254,7 @@ INNER JOIN wirelessadviser.devices AS d2
  				} else {
  					$line["DT_RowClass"] = "error";
  				}
+
  			} elseif ($type==="ev") {
  				switch ($out[$i]["severity_id"]) {
  					case '0':
@@ -259,7 +267,7 @@ INNER JOIN wirelessadviser.devices AS d2
  					case '3':
  					case '4':
  					case '5':
- 							$line["DT_RowClass"] = "error";
+ 					$line["DT_RowClass"] = "error";
  					break;
  				}
  			}

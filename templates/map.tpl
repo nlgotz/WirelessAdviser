@@ -62,20 +62,20 @@ for (var i = 0, length = mapPoints.length; i < length; i++) {
 	var image = {
 		url: 'assets/img/Default.png',
     	// This marker is 20 pixels wide by 32 pixels tall.
-    	scaledSize: new google.maps.Size(24, 24),
+    	scaledSize: new google.maps.Size(16, 16),
     	// The origin for this image is 0,0.
     	origin: new google.maps.Point(0,0),
     	// The anchor for this image is the base of the flagpole at 0,32.
-    	anchor: new google.maps.Point(12, 12)
+    	anchor: new google.maps.Point(8, 8)
     };
 
     var shadow = {
     	url: shadowIcon,
     	// The shadow image is larger in the horizontal dimension
     	// while the position and offset are the same as for the main image.
-    	scaledSize: new google.maps.Size(30, 30),
+    	scaledSize: new google.maps.Size(20, 20),
     	origin: new google.maps.Point(0,0),
-    	anchor: new google.maps.Point(15, 15)
+    	anchor: new google.maps.Point(10, 10)
     };
 
   // Creating a marker and putting it on the map
@@ -145,6 +145,11 @@ window.resize;
 <div class="row-fluid">
 	<div class="span12">
 		<div id="map-canvas"></div>
+	</div>
+</div>
+<div class="row-fluid">
+	<div class="span12">
+		hi
 	</div>
 </div>
 
