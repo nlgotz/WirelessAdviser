@@ -3,7 +3,7 @@ session_start();
 include_once("db.php");
 if ( !isset( $_SESSION['valid_user'] ) || $_SESSION['valid_user'] != "true" )
 {
-    header( "Location: $site/user/login" );
+    header( "Location: $site/login.php" );
     exit();
 }
 
@@ -11,9 +11,9 @@ require_once 'h2o/h2o.php';
 
 
     //check if the name get parameter is set, if not, set it to the default
-if(isset($_GET['name']))
+if(isset($_GET['p']))
 {
-    $name = $_GET['name'];
+    $name = $_GET['p'];
 } else {
     $name = "map";
 } 

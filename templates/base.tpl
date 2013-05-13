@@ -60,17 +60,17 @@
             <a class="brand" href="{{name.site}}">Wireless Adviser</a>
             <div class="nav-collapse collapse">
               <p class="navbar-text pull-right">
-                <a href="{{name.site}}user/logout" class="navbar-link">Logout</a>
+                <a href="{{name.site}}login.php?p=logout" class="navbar-link">Logout</a>
               </p>
               <ul class="nav">
                 <li {% if name.t == "ma"%} class="active"{% endif %}>
-                  <a href="{{name.site}}map">Map</a></li>
+                  <a href="{{name.site}}index.php?p=map">Map</a></li>
                   <li{% if name.t == "in"%} class="active"{% endif %}>
-                  <a href="{{name.site}}inventory">Inventory</a></li>
+                  <a href="{{name.site}}index.php?p=inventory">Inventory</a></li>
                   <li{% if name.t == "da"%} class="active"{% endif %}>
-                  <a href="{{name.site}}dashboard">Dashboard</a></li>
+                  <a href="{{name.site}}index.php?p=dashboard">Dashboard</a></li>
                   <li{% if name.t == "ev"%} class="active"{% endif %}>
-                  <a href="{{name.site}}events">Events</a></li>
+                  <a href="{{name.site}}index.php?p=events">Events</a></li>
                 </ul>
               </div><!--/.nav-collapse -->
             </div>
@@ -86,7 +86,7 @@
 
      <div id="footer">
       <div class="container">
-        <a href="{{name.site}}admin">Admin</a> | <a href="#">Manual</a> | 
+        <a href="{{name.site}}index.php?p=admin">Admin</a> | <a href="#">Manual</a> | 
         <a href="#About" data-toggle="modal">About</a>
       </div>
     </div>

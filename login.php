@@ -6,7 +6,7 @@ include_once("db.php");
 $isErr = false;
 
 //Let the user logout
-if(isset($_GET['q'])&&$_GET['q']==="logout") {
+if(isset($_GET['p'])&&$_GET['p']==="logout") {
   // remove all the variables in the session
   session_unset(); 
   
@@ -54,7 +54,7 @@ ob_flush();
   <meta name="author" content="">
 
   <!-- Le styles -->
-  <link href="../assets/css/bootstrap.css" rel="stylesheet">
+  <link href="assets/css/bootstrap.css" rel="stylesheet">
   <style type="text/css">
   body {
     padding-top: 40px;
@@ -88,7 +88,7 @@ ob_flush();
   }
 
   </style>
-  <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+  <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 
   <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -107,7 +107,7 @@ ob_flush();
 
       <div class="container">
 
-        <form class="form-signin" method="POST" action="<?php echo $site ?>/user/login">
+        <form class="form-signin" method="POST" action="<?php echo $site ?>/login.php">
           <h1 class="form-signin-heading">Wireless Adviser</h1>
           <h2 class="form-signin-heading">Please sign in</h2>
           <?php if($isErr) { ?>

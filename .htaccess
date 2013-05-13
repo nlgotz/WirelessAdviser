@@ -1,4 +1,4 @@
-RewriteEngine On
+#RewriteEngine On
 
 # Don't match real existing files so CSS, scripts, images aren't rewritten
 RewriteCond %{REQUEST_FILENAME} !-f
