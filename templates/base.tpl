@@ -86,7 +86,7 @@
 
      <div id="footer">
       <div class="container">
-        <a href="{{name.site}}admin.php">Admin</a> | <a href="#">Manual</a> | 
+        <a href="{{name.site}}admin">Admin</a> | <a href="#">Manual</a> | 
         <a href="#About" data-toggle="modal">About</a>
       </div>
     </div>

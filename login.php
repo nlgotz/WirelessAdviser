@@ -3,6 +3,7 @@ session_start();
 ob_start();
 
 include_once("db.php");
+$isErr = false;
 
 //Let the user logout
 if(isset($_GET['q'])&&$_GET['q']==="logout") {
@@ -29,7 +30,7 @@ if(isset($_POST['submitted'])) {
   $res = $db->select("wirelessadviser.users", "user_id=:username AND password=:pass LIMIT 1", $bind);
 
   if(!$res) {
-    echo "try again";
+    $isErr = true;
   } else {
     $_SESSION['valid_user'] = "true";
     $_SESSION['user_id'] = $res[0]['user_id'];
@@ -47,7 +48,7 @@ ob_flush();
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Sign in &middot; Twitter Bootstrap</title>
+  <title>Sign in | Wireless Adviser</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -109,6 +110,11 @@ ob_flush();
         <form class="form-signin" method="POST" action="<?php echo $site ?>/user/login">
           <h1 class="form-signin-heading">Wireless Adviser</h1>
           <h2 class="form-signin-heading">Please sign in</h2>
+          <?php if($isErr) { ?>
+          <div class="alert alert-error">
+            Login error, please try again.
+          </div>
+          <?php } ?>
           <input type="text" class="input-block-level" placeholder="username" name="username">
           <input type="password" class="input-block-level" placeholder="password" name="password">
           <button class="btn btn-large btn-primary" type="submit" name="submitted">Sign in</button>
